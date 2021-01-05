@@ -4,15 +4,37 @@
 # b] How to store ? - students = [[name, rollno, marks]]
 # Initialisation
 import time
+import os
+
+# For console color
+os.system("cls")
+
+print()
+print("\033[36m Quiz Application By MANALI BHOSLE \033[00m")
+
+for i in range(0, 50):
+    print("\033[93m -\033[00m", end="")
+print()
 
 
 user_record = []
 questions = [
-    ["question 1", "A"],
-    ["question 2", "B"],
-    ["question 3", "C"],
-    ["question 4", "D"],
-    ["question 5", "C"]
+    ["What did the Romans call Scotland?", "Caledonia"],
+    ["Who was made Lord Mayor of London In 1397, 1398, 1406 And 1419?",
+        "Richard (Dick) Whittington"],
+    ["Who was the youngest British Prime Minister?",
+        "William Pitt (The Younger)"],
+    ["In which year was Joan of Arc burned at the stake?", "1431"],
+    ["In which year did Britain originally join the EEC, now known as the European Union?",
+        "1973"]
+]
+
+expected_answers = [
+    ["Caledonia", "Augusta National", "Scot"],
+    ["Catherine Parr", "Richard (Dick) Whittington", "Sir Walter Raleigh"],
+    ["William Pitt (The Younger)", "Sir Walter Raleigh", "Mike Pence"],
+    ["1350", "1401", "1431"],
+    ["1901", "1973", "1937"],
 ]
 
 questn_number = 1
@@ -25,17 +47,18 @@ condition = "no"
 while condition == "no":
     print('''
         Options :
-        1. Previous Student Records
-        2. Give a test
+        1. EXIT
+        2. Start Test
         ''')
 
     option = int(input("Choose your option : "))
 
     if (option == 1):
-        print(f'Student Record : {user_record}')
-        print("Do you want to exit ? Yes/No")
-        condition = input()
-        condition = condition.lower()
+        # print(f'Student Record : {user_record}')
+        # print("Do you want to exit ? Yes/No")
+        # condition = input()
+        # condition = condition.lower()
+        condition = "yes"
     else:
 
         name = input("Enter name : ")
@@ -48,30 +71,35 @@ while condition == "no":
 
             for j in range(0, len(questions[i])-1):
                 print(f' {questn_number}] {questions[i][j]} ? ')
-                print("   1] A  2] B  3] C  4] D")
+                print(
+                    f"   1] {expected_answers[i][0]}   2] {expected_answers[i][1]}  3] {expected_answers[i][2]} ")
 
                 # Collect options from user !
                 answer = input("Your Answer : ")
 
-                # Check whether time is left or not !
+                # Initialise current time every time the question changes !
                 current_time = time.time()
 
+                # Check whether time is left or not !
                 if (time_after - current_time <= 0):
                     time_flag = 1
                     break
 
                 # Verify if the option is correct or not !
-                if(answer.upper() == questions[i][1]):
+                if(expected_answers[i][int(answer)-1] == questions[i][1]):
                     print(
-                        f"Correct - Time Left {int(time_after - current_time)} secs")
+                        f"Correct - Time Left \033[33m {int(time_after - current_time)} \033[00m secs")
                     total_marks = total_marks + 1
-                elif answer.lower() == "exit":
-                    flag = 1
                 else:
                     print(
-                        f" Wrong - Time Left {int(time_after - current_time)} secs ")
+                        f" Wrong - Time Left \033[33m {int(time_after - current_time)} \033[00m secs ")
 
                 questn_number = questn_number + 1
+                print()
+                for i in range(0, 50):
+                    print("\033[93m -\033[00m", end="")
+                print()
+                print()
 
             # When user types exit
             if (flag == 1):
@@ -89,8 +117,12 @@ while condition == "no":
         print(f'Students : {user_record}')
 
         # Final report Card !
-        print(f' {name} you got {total_marks} marks !') if (
-            total_marks > 1) else print(f' {name} you got {total_marks} mark !')
+        print(f''' Name - \033[36m {name} \033[00m
+                   Roll Number - \033[36m {roll_no} \033[00m
+                   Marks - \033[36m {total_marks} \033[00m''') if (
+            total_marks > 1) else print(f''' \033[36m {name} \033[00m
+                                             Roll Number - \033[36m {roll_no} \033[00m
+                                             Marks - \033[36m {total_marks} \033[00m''')
 
         # Reset total_marks !
         total_marks = 0
@@ -99,3 +131,8 @@ while condition == "no":
         print("Do you want to exit ? Yes/No")
         condition = input()
         condition = condition.lower()
+
+# Out of loop !
+for i in range(0, 50):
+    print("\033[93m -\033[00m", end="")
+print()
